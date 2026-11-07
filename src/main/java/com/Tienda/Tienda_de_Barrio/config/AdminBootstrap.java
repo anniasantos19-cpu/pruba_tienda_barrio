@@ -7,7 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import com.Tienda.Tienda_de_Barrio.Modelo.DAO.UsuarioDAO;
-import com.Tienda.Tienda_de_Barrio.modelo.VO.UsuarioVO;
+import com.Tienda.Tienda_de_Barrio.Modelo.VO.UsuarioVO;
 
 @Component
 public class AdminBootstrap implements CommandLineRunner {
