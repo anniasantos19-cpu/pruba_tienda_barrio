@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Tienda.Tienda_de_Barrio.Modelo.DAO.VentaDAO;
-import com.Tienda.Tienda_de_Barrio.modelo.VO.VentaVO;
+import com.Tienda.Tienda_de_Barrio.Modelo.VO.VentaVO;
 import com.Tienda.Tienda_de_Barrio.service.RegistroOperacionService;
 
 @RestController

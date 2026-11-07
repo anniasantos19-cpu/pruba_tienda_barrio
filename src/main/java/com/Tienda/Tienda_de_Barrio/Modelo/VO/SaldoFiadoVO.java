@@ -1,4 +1,4 @@
-package com.Tienda.Tienda_de_Barrio.modelo.VO;
+package com.Tienda.Tienda_de_Barrio.Modelo.VO;
 
 import java.math.BigDecimal;
 

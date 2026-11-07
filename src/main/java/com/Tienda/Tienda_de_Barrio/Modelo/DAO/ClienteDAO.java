@@ -9,7 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import com.Tienda.Tienda_de_Barrio.modelo.VO.ClienteVO;
+import com.Tienda.Tienda_de_Barrio.Modelo.VO.ClienteVO;
 
 @Repository
 public class ClienteDAO {

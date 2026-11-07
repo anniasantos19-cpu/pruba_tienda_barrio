@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.Tienda.Tienda_de_Barrio.Modelo.DAO.ClienteDAO;
-import com.Tienda.Tienda_de_Barrio.modelo.VO.ClienteVO;
+import com.Tienda.Tienda_de_Barrio.Modelo.VO.ClienteVO;
 
 @Controller
 @RequestMapping("/web/clientes")

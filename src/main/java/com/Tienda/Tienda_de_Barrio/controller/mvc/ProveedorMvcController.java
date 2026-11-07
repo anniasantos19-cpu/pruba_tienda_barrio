@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.Tienda.Tienda_de_Barrio.Modelo.DAO.ProveedorDAO;
-import com.Tienda.Tienda_de_Barrio.modelo.VO.ProveedorVO;
+import com.Tienda.Tienda_de_Barrio.Modelo.VO.ProveedorVO;
 
 @Controller
 @RequestMapping("/web/proveedores")
