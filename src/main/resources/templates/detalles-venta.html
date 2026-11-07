@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Detalle de venta')}"></head>
+<body>
+    <div class="app-shell">
+        <aside th:replace="~{fragments/layout :: sidebar('ventas')}"></aside>
+        <div class="app-main">
+            <header th:replace="~{fragments/layout :: pageHeader('Detalle de venta', 'Productos y cantidades incluidos en esta venta.')}"></header>
+            <main class="content">
+                <section class="section-block">
+                    <a class="back-link" th:href="@{/web/ventas}"><span aria-hidden="true">←</span> Volver a ventas</a>
+                    <div class="section-heading">
+                        <div><span class="eyebrow">MOVIMIENTO DEL NEGOCIO</span><h2>Venta <span class="detail-id" th:text="${'#' + idVenta}">#0</span></h2></div>
+                        <span class="list-count" th:text="${#lists.size(detalles)} + ' productos'">0 productos</span>
+                    </div>
+                    <div class="table-card">
+                        <div class="table-toolbar"><div class="table-title"><strong>Productos vendidos</strong><small>Detalle de los artículos incluidos en esta venta.</small></div></div>
+                        <div class="table-scroll">
+                            <table>
+                                <thead><tr><th>ID detalle</th><th>Producto</th><th>Cantidad</th><th>Precio</th></tr></thead>
+                                <tbody>
+                                    <tr th:each="detalle : ${detalles}">
+                                        <td class="table-id" th:text="${detalle.idDetalle}"></td>
+                                        <td th:text="${detalle.idProducto}"></td>
+                                        <td th:text="${detalle.cantidad}"></td>
+                                        <td th:text="${'$ ' + #numbers.formatDecimal(detalle.precio, 1, 2)}"></td>
+                                    </tr>
+                                    <tr th:if="${#lists.isEmpty(detalles)}"><td class="empty-state" colspan="4">Esta venta no tiene productos asociados.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+                <footer class="page-footer">Tienda de Barrio <span>·</span> Detalle de venta</footer>
+            </main>
+        </div>
+    </div>
+    <script th:src="@{/js/app.js}" defer></script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Compras')}"></head>
+<body>
+    <div class="app-shell">
+        <aside th:replace="~{fragments/layout :: sidebar('compras')}"></aside>
+        <div class="app-main">
+            <header th:replace="~{fragments/layout :: pageHeader('Compras', 'Lleva el control de lo que entra a tu tienda.')}"></header>
+            <main class="content">
+                <section class="section-block">
+                    <div class="section-heading">
+                        <div><span class="eyebrow">ABASTECIMIENTO</span><h2>Registro de compras</h2></div>
+                        <div class="catalog-heading-actions">
+                            <span class="list-count" th:text="${#lists.size(compras)} + ' compras'">0 compras</span>
+                            <button class="button button-primary" type="button" data-toggle-form="#nueva-compra"
+                                    aria-controls="nueva-compra" aria-expanded="false">Agregar compra <span aria-hidden="true">+</span></button>
+                        </div>
+                    </div>
+                    <p class="form-feedback form-feedback-error" th:if="${errorCompra}" th:text="${errorCompra}" role="alert"></p>
+                    <p class="form-feedback form-feedback-success" th:if="${exitoCompra}" th:text="${exitoCompra}" role="status"></p>
+                    <div id="nueva-compra" class="table-card catalog-add-panel" hidden>
+                        <div class="table-toolbar"><div class="table-title"><strong>Registrar compra</strong><small>Indica el costo unitario de cada producto; las existencias se actualizarán.</small></div></div>
+                        <form class="catalog-form" th:action="@{/web/compras}" method="post">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                            <label>Proveedor<select name="idProveedor" required>
+                                <option value="" disabled selected>Selecciona un proveedor</option>
+                                <option th:each="proveedor : ${proveedores}" th:value="${proveedor.idProveedor}" th:text="${proveedor.nombre}"></option>
+                            </select></label>
+                            <div class="operation-lines" id="lineas-compra" data-operation-lines>
+                                <div class="operation-line purchase-line" data-operation-line>
+                                    <label>Producto<select name="idsProducto" required>
+                                        <option value="" disabled selected>Selecciona un producto</option>
+                                        <option th:each="producto : ${productos}" th:value="${producto.idProducto}"
+                                                th:text="${producto.nombre + ' · stock actual: ' + producto.cantidad}"></option>
+                                    </select></label>
+                                    <label>Cantidad<input name="cantidades" type="number" min="1" value="1" data-default-value="1" required></label>
+                                    <label>Costo unitario<input name="precios" type="number" min="0.01" step="0.01" data-default-value="" required></label>
+                                    <button class="table-danger" type="button" data-remove-line aria-label="Quitar producto">Quitar</button>
+                                </div>
+                            </div>
+                            <div class="operation-form-actions">
+                                <button class="table-link" type="button" data-add-line="#lineas-compra">Agregar otro producto</button>
+                                <button class="button button-primary catalog-submit" type="submit">Guardar compra</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="table-card">
+                        <div class="table-toolbar">
+                            <div class="table-title"><strong>Compras registradas</strong><small>Consulta proveedor, fecha y valor total.</small></div>
+                            <input class="table-search" type="search" placeholder="Buscar compra..." aria-label="Buscar compras" data-table-filter="#tabla-compras">
+                        </div>
+                        <div class="table-scroll">
+                            <table id="tabla-compras">
+                                <thead><tr><th>ID</th><th>Usuario</th><th>Proveedor</th><th>Fecha</th><th>Total</th><th>Detalle</th><th th:if="${esAdministrador}">Acciones</th></tr></thead>
+                                <tbody>
+                                    <tr th:each="compra : ${compras}" data-search-row>
+                                        <td class="table-id" th:text="${compra.idCompra}"></td>
+                                        <td th:text="${compra.idUsuario}"></td>
+                                        <td th:text="${compra.idProveedor}"></td>
+                                        <td th:text="${compra.fecha != null ? #strings.substring(compra.fecha.toString(), 0, 10) : '—'}"></td>
+                                        <td th:text="${'$ ' + #numbers.formatDecimal(compra.total, 1, 2)}"></td>
+                                        <td><a class="table-link" th:href="@{/web/compras/{id}/detalles(id=${compra.idCompra})}">Ver detalle <span aria-hidden="true">→</span></a></td>
+                                        <td th:if="${esAdministrador}">
+                                            <form th:action="@{/web/compras/{id}/eliminar(id=${compra.idCompra})}" method="post"
+                                                  data-confirm-delete
+                                                  data-confirm-message="¿Eliminar esta compra? Se descontarán del inventario sus productos, si hay existencias suficientes.">
+                                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                                                <button class="table-danger" type="submit">Eliminar</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    <tr th:if="${#lists.isEmpty(compras)}"><td class="empty-state" th:attr="colspan=${esAdministrador ? 7 : 6}">Aún no hay compras registradas.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+                <footer class="page-footer">Tienda de Barrio <span>·</span> Compras</footer>
+            </main>
+        </div>
+    </div>
+    <script th:src="@{/js/app.js}" defer></script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Cambiar contraseña')}"></head>
+<body>
+    <div class="app-shell">
+        <aside th:replace="~{fragments/layout :: sidebar('contrasena')}"></aside>
+        <div class="app-main">
+            <header th:replace="~{fragments/layout :: pageHeader('Cambiar contraseña', 'Actualiza la clave de acceso de tu cuenta.')}"></header>
+            <main class="content">
+                <section class="section-block">
+                    <div class="section-heading">
+                        <div>
+                            <span class="eyebrow">SEGURIDAD DE LA CUENTA</span>
+                            <h2>Actualiza tu contraseña</h2>
+                        </div>
+                    </div>
+                    <p class="form-feedback form-feedback-error" th:if="${errorContrasena}" th:text="${errorContrasena}" role="alert"></p>
+                    <p class="form-feedback form-feedback-success" th:if="${exitoContrasena}" th:text="${exitoContrasena}" role="status"></p>
+                    <div class="table-card user-create-card">
+                        <div class="table-toolbar">
+                            <div class="table-title"><strong>Cambiar contraseña</strong><small>Confirma tu contraseña actual para guardar una nueva.</small></div>
+                        </div>
+                        <form class="user-create-form password-change-form" th:action="@{/web/contrasena}" method="post">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                            <label>Contraseña actual
+                                <input name="contrasenaActual" type="password" autocomplete="current-password" required>
+                            </label>
+                            <label>Nueva contraseña
+                                <input name="contrasenaNueva" type="password" autocomplete="new-password" minlength="8" required>
+                            </label>
+                            <label>Confirmar nueva contraseña
+                                <input name="confirmarContrasena" type="password" autocomplete="new-password" minlength="8" required>
+                            </label>
+                            <div class="user-edit-actions">
+                                <button class="button button-primary user-create-submit" type="submit">Guardar contraseña</button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+                <footer class="page-footer">Tienda de Barrio <span>·</span> Seguridad de la cuenta</footer>
+            </main>
+        </div>
+    </div>
+    <script th:src="@{/js/app.js}" defer></script>
+</body>
+</html>

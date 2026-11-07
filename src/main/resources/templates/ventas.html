@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Ventas')}"></head>
+<body>
+    <div class="app-shell">
+        <aside th:replace="~{fragments/layout :: sidebar('ventas')}"></aside>
+        <div class="app-main">
+            <header th:replace="~{fragments/layout :: pageHeader('Ventas', 'Un vistazo claro a las ventas de tu tienda.')}"></header>
+            <main class="content">
+                <section class="section-block">
+                    <div class="section-heading">
+                        <div><span class="eyebrow">MOVIMIENTO DEL NEGOCIO</span><h2>Registro de ventas</h2></div>
+                        <div class="catalog-heading-actions">
+                            <span class="list-count" th:text="${#lists.size(ventas)} + ' ventas'">0 ventas</span>
+                            <button class="button button-primary" type="button" data-toggle-form="#nueva-venta"
+                                    aria-controls="nueva-venta" aria-expanded="false">Agregar venta <span aria-hidden="true">+</span></button>
+                        </div>
+                    </div>
+                    <p class="form-feedback form-feedback-error" th:if="${errorVenta}" th:text="${errorVenta}" role="alert"></p>
+                    <p class="form-feedback form-feedback-success" th:if="${exitoVenta}" th:text="${exitoVenta}" role="status"></p>
+                    <div id="nueva-venta" class="table-card catalog-add-panel" hidden>
+                        <div class="table-toolbar"><div class="table-title"><strong>Registrar venta</strong><small>El total se calcula con el precio actual y se descuentan las existencias.</small></div></div>
+                        <form class="catalog-form" th:action="@{/web/ventas}" method="post">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                            <label>Cliente<select name="idCliente" required>
+                                <option value="" disabled selected>Selecciona un cliente</option>
+                                <option th:each="cliente : ${clientes}" th:value="${cliente.idCliente}" th:text="${cliente.nombre + ' · ' + cliente.telefono}"></option>
+                            </select></label>
+                            <label>Forma de pago<select name="fiado" required>
+                                <option value="false" selected>Contado · pagado</option>
+                                <option value="true">Fiado · pendiente</option>
+                            </select></label>
+                            <div class="operation-lines" id="lineas-venta" data-operation-lines>
+                                <div class="operation-line sale-line" data-operation-line>
+                                    <label>Producto<select name="idsProducto" required>
+                                        <option value="" disabled selected>Selecciona un producto</option>
+                                        <option th:each="producto : ${productos}" th:value="${producto.idProducto}"
+                                                th:text="${producto.nombre + ' · stock: ' + producto.cantidad + ' · $' + #numbers.formatDecimal(producto.precio, 1, 2)}"></option>
+                                    </select></label>
+                                    <label>Cantidad<input name="cantidades" type="number" min="1" value="1" data-default-value="1" required></label>
+                                    <button class="table-danger" type="button" data-remove-line aria-label="Quitar producto">Quitar</button>
+                                </div>
+                            </div>
+                            <div class="operation-form-actions">
+                                <button class="table-link" type="button" data-add-line="#lineas-venta">Agregar otro producto</button>
+                                <button class="button button-primary catalog-submit" type="submit">Guardar venta</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="table-card debt-summary">
+                        <div class="table-toolbar">
+                            <div class="table-title"><strong>Cuentas fiadas pendientes</strong><small>Saldo total por cobrar</small></div>
+                            <strong class="list-count" th:text="${'$ ' + #numbers.formatDecimal(totalFiadoPendiente, 1, 2)}">$ 0.00</strong>
+                        </div>
+                        <div class="table-scroll">
+                            <table>
+                                <thead><tr><th>Cliente</th><th>Ventas pendientes</th><th>Debe</th></tr></thead>
+                                <tbody>
+                                    <tr th:each="fiado : ${fiadosPendientes}">
+                                        <td><strong th:text="${fiado.nombreCliente}"></strong></td>
+                                        <td th:text="${fiado.ventasPendientes}"></td>
+                                        <td th:text="${'$ ' + #numbers.formatDecimal(fiado.saldoPendiente, 1, 2)}"></td>
+                                    </tr>
+                                    <tr th:if="${#lists.isEmpty(fiadosPendientes)}"><td class="empty-state" colspan="3">No hay cuentas fiadas pendientes.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="table-card">
+                        <div class="table-toolbar">
+                            <div class="table-title"><strong>Ventas registradas</strong><small>Consulta fecha, cliente y valor total.</small></div>
+                            <input class="table-search" type="search" placeholder="Buscar venta..." aria-label="Buscar ventas" data-table-filter="#tabla-ventas">
+                        </div>
+                        <div class="table-scroll">
+                            <table id="tabla-ventas">
+                                <thead><tr><th>ID</th><th>Usuario</th><th>Cliente</th><th>Fecha</th><th>Total</th><th>Forma de pago</th><th>Estado</th><th>Detalle</th><th>Acciones</th></tr></thead>
+                                <tbody>
+                                    <tr th:each="venta : ${ventas}" data-search-row>
+                                        <td class="table-id" th:text="${venta.idVenta}"></td>
+                                        <td th:text="${venta.idUsuario}"></td>
+                                        <td th:text="${venta.nombreCliente != null ? venta.nombreCliente : 'Cliente eliminado'}"></td>
+                                        <td th:text="${venta.fecha != null ? #strings.substring(venta.fecha.toString(), 0, 10) : '—'}"></td>
+                                        <td th:text="${'$ ' + #numbers.formatDecimal(venta.total, 1, 2)}"></td>
+                                        <td th:text="${venta.fiado ? 'Fiado' : 'Contado'}"></td>
+                                        <td><span class="payment-status" th:classappend="${venta.fiado and !venta.pagado} ? ' is-pending' : ' is-paid'"
+                                                th:text="${venta.pagado ? 'Pagado' : 'Pendiente'}">Pagado</span></td>
+                                        <td><a class="table-link" th:href="@{/web/ventas/{id}/detalles(id=${venta.idVenta})}">Ver detalle <span aria-hidden="true">→</span></a></td>
+                                        <td>
+                                            <div class="user-actions">
+                                                <form th:if="${venta.fiado and !venta.pagado}" th:action="@{/web/ventas/{id}/pagar(id=${venta.idVenta})}" method="post">
+                                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                                                    <button class="table-link payment-action" type="submit">Marcar pagado</button>
+                                                </form>
+                                                <span th:if="${!venta.fiado or venta.pagado}" class="current-user-label">—</span>
+                                                <form th:if="${esAdministrador}" th:action="@{/web/ventas/{id}/eliminar(id=${venta.idVenta})}"
+                                                      method="post" data-confirm-delete
+                                                      data-confirm-message="¿Eliminar esta venta? Sus productos se devolverán al inventario.">
+                                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                                                    <button class="table-danger" type="submit">Eliminar</button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr th:if="${#lists.isEmpty(ventas)}"><td class="empty-state" colspan="9">Aún no hay ventas registradas.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+                <footer class="page-footer">Tienda de Barrio <span>·</span> Ventas</footer>
+            </main>
+        </div>
+    </div>
+    <script th:src="@{/js/app.js}" defer></script>
+</body>
+</html>

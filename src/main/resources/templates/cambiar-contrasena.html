@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f5f1e7">
+    <title>Cambiar contraseña | Tienda de Barrio</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body class="login-page">
+    <main class="login-layout">
+        <section class="login-panel">
+            <a class="brand login-brand" th:href="@{/login}">
+                <img class="brand-logo" th:src="@{/images/logotipo.png}" alt="Tienda de Barrio">
+                <span class="brand-copy"><strong>Tienda de Barrio</strong><small>ADMINISTRACIÓN</small></span>
+            </a>
+            <div class="login-content">
+                <span class="eyebrow">SEGURIDAD DE TU CUENTA</span>
+                <h1>Cambiar<br><em>contraseña.</em></h1>
+                <p>Confirma tu contraseña actual para guardar una nueva.</p>
+                <div class="login-notice" th:if="${errorContrasena}" th:text="${errorContrasena}" role="alert"></div>
+                <div class="login-success" th:if="${exitoContrasena}" th:text="${exitoContrasena}" role="status"></div>
+                <form class="login-form" th:action="@{/cambiar-contrasena}" method="post">
+                    <label for="correo">Correo electrónico</label>
+                    <input id="correo" name="correo" type="email" placeholder="tu@tienda.com" autocomplete="username" required autofocus>
+                    <label for="contrasenaActual">Contraseña actual</label>
+                    <input id="contrasenaActual" name="contrasenaActual" type="password" autocomplete="current-password" required>
+                    <label for="contrasenaNueva">Nueva contraseña</label>
+                    <input id="contrasenaNueva" name="contrasenaNueva" type="password" autocomplete="new-password" minlength="8" required>
+                    <label for="confirmarContrasena">Confirmar nueva contraseña</label>
+                    <input id="confirmarContrasena" name="confirmarContrasena" type="password" autocomplete="new-password" minlength="8" required>
+                    <button class="button button-primary login-submit" type="submit">Guardar contraseña <span aria-hidden="true">→</span></button>
+                </form>
+                <p class="login-footnote"><a class="password-change-link" th:href="@{/login}">Volver a iniciar sesión</a></p>
+            </div>
+        </section>
+        <aside class="login-visual">
+            <div class="login-visual-overlay"></div>
+            <div class="visual-caption"><span class="visual-line"></span><span>Lo cercano siempre<br>tiene algo especial.</span></div>
+            <span class="visual-location">TU TIENDA DE SIEMPRE · TU LUGAR DE CONFIANZA</span>
+        </aside>
+    </main>
+</body>
+</html>

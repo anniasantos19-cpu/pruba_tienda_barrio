@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Inicio')}"></head>
+<body>
+    <div class="app-shell">
+        <aside th:replace="~{fragments/layout :: sidebar('inicio')}"></aside>
+        <div class="app-main">
+            <header th:replace="~{fragments/layout :: pageHeader('Tu negocio, siempre en orden', 'Administra tu tienda de manera fácil, organizada y segura.')}"></header>
+            <main class="content">
+                <section class="welcome-card">
+                    <div class="welcome-copy">
+                        <span class="eyebrow">GESTIÓN DE TIENDA</span>
+                        <h2>Todo tu negocio, bajo control.</h2>
+                        <p>Gestiona tus productos, ventas y compras desde un solo lugar. Mantén tu tienda organizada y toma mejores decisiones.</p>
+                        <a class="button button-light" th:href="@{/web/productos}">Ver mis productos <span aria-hidden="true">→</span></a>
+                    </div>
+                    <div class="welcome-art" role="img" aria-label="Ilustración de una tienda de barrio"></div>
+                </section>
+
+                <section class="section-block">
+                    <div class="section-heading">
+                        <div>
+                            <span class="eyebrow">ACCESOS RÁPIDOS</span>
+                            <h2>¿Qué deseas consultar?</h2>
+                        </div>
+                    </div>
+                    <div class="module-grid">
+                        <a class="module-card" th:href="@{/web/productos}">
+                            <span class="module-icon">01</span><span class="module-title">Productos</span>
+                            <span class="module-description">Inventario, categorías y precios.</span><span class="module-arrow">↗</span>
+                        </a>
+                        <a class="module-card" th:href="@{/web/ventas}">
+                            <span class="module-icon">02</span><span class="module-title">Ventas</span>
+                            <span class="module-description">Revisa las ventas y sus detalles.</span><span class="module-arrow">↗</span>
+                        </a>
+                        <a class="module-card" th:href="@{/web/compras}">
+                            <span class="module-icon">03</span><span class="module-title">Compras</span>
+                            <span class="module-description">Consulta las compras a proveedores.</span><span class="module-arrow">↗</span>
+                        </a>
+                        <a class="module-card" th:href="@{/web/clientes}">
+                            <span class="module-icon">04</span><span class="module-title">Clientes</span>
+                            <span class="module-description">Mantén a mano sus datos de contacto.</span><span class="module-arrow">↗</span>
+                        </a>
+                        <a class="module-card" th:href="@{/web/proveedores}">
+                            <span class="module-icon">05</span><span class="module-title">Proveedores</span>
+                            <span class="module-description">Encuentra fácilmente a tus aliados.</span><span class="module-arrow">↗</span>
+                        </a>
+                        <a class="module-card" th:if="${esAdministrador}" th:href="@{/web/usuarios}">
+                            <span class="module-icon">06</span><span class="module-title">Usuarios y roles</span>
+                            <span class="module-description">Consulta las cuentas del equipo.</span><span class="module-arrow">↗</span>
+                        </a>
+                    </div>
+                </section>
+                <footer class="page-footer">Tienda de Barrio <span>·</span> Hecho para acompañar tu día a día.</footer>
+            </main>
+        </div>
+    </div>
+    <script th:src="@{/js/app.js}" defer></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f5f1e7">
+    <title>Iniciar sesión | Tienda de Barrio</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body class="login-page">
+    <main class="login-layout">
+        <section class="login-panel">
+            <a class="brand login-brand" th:href="@{/login}">
+                <img class="brand-logo" th:src="@{/images/logotipo.png}" alt="TIENDA DE">
+                <span class="brand-copy"><strong>Tienda de Barrio</strong><small>ADMINISTRACIÓN</small></span>
+            </a>
+            <div class="login-content">
+                <span class="eyebrow">QUÉ BUENO TENERTE DE VUELTA</span>
+                <h1>Tu negocio,<br><em>en buenas manos.</em></h1>
+                <p>Inicia sesión para continuar con la gestión de tu tienda.</p>
+                <div class="login-notice" th:if="${param.error}">El correo o la contraseña no son correctos. Inténtalo nuevamente.</div>
+                <div class="login-success" th:if="${param.logout}">Tu sesión se cerró correctamente.</div>
+                <form class="login-form" th:action="@{/login}" method="post">
+                    <label for="username">Correo electrónico</label>
+                    <input id="username" name="username" type="email" placeholder="tu@tienda.com" autocomplete="username" required autofocus>
+                    <label for="password">Contraseña</label>
+                    <input id="password" name="password" type="password" placeholder="Ingresa tu contraseña" autocomplete="current-password" required>
+                    <a class="password-change-link" th:href="@{/cambiar-contrasena}">¿Quieres cambiar tu contraseña?</a>
+                    <button class="button button-primary login-submit" type="submit">Ingresar <span aria-hidden="true">→</span></button>
+                </form>
+                <p class="login-footnote">Acceso exclusivo para el equipo de la tienda.</p>
+            </div>
+        </section>
+        <aside class="login-visual">
+            <div class="login-visual-overlay"></div>
+            <div class="visual-caption"><span class="visual-line"></span><span>Lo cercano siempre<br>tiene algo especial.</span></div>
+            <span class="visual-location">TU TIENDA DE SIEMPRE · TU LUGAR DE CONFIANZA</span>
+        </aside>
+    </main>
+</body>
+</html>
