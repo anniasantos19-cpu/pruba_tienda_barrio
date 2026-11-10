@@ -289,3 +289,8 @@ $env:SERVER_PORT = "8081"
 - `src/main/resources/db/migrations/`: scripts SQL versionados.
 - `target/reports/apidocs/index.html`: Javadoc generado localmente.
 - `src/test/java/`: pruebas automatizadas.
+
+## Actualización del proyecto
+
+En esta rama realicé una actualización del archivo README
+como parte de la práctica de control de versiones con Git y GitHub.
