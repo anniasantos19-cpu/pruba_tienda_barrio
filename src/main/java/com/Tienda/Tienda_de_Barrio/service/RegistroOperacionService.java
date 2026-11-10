@@ -18,11 +18,11 @@ import com.Tienda.Tienda_de_Barrio.Modelo.DAO.ProductoDAO;
 import com.Tienda.Tienda_de_Barrio.Modelo.DAO.ProveedorDAO;
 import com.Tienda.Tienda_de_Barrio.Modelo.DAO.UsuarioDAO;
 import com.Tienda.Tienda_de_Barrio.Modelo.DAO.VentaDAO;
-import com.Tienda.Tienda_de_Barrio.modelo.VO.CompraVO;
-import com.Tienda.Tienda_de_Barrio.modelo.VO.DetalleCompraVO;
-import com.Tienda.Tienda_de_Barrio.modelo.VO.DetalleVentaVO;
-import com.Tienda.Tienda_de_Barrio.modelo.VO.ProductoVO;
-import com.Tienda.Tienda_de_Barrio.modelo.VO.VentaVO;
+import com.Tienda.Tienda_de_Barrio.Modelo.VO.CompraVO;
+import com.Tienda.Tienda_de_Barrio.Modelo.VO.DetalleCompraVO;
+import com.Tienda.Tienda_de_Barrio.Modelo.VO.DetalleVentaVO;
+import com.Tienda.Tienda_de_Barrio.Modelo.VO.ProductoVO;
+import com.Tienda.Tienda_de_Barrio.Modelo.VO.VentaVO;
 
 @Service
 public class RegistroOperacionService {

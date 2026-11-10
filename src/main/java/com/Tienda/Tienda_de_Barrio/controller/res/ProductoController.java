@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Tienda.Tienda_de_Barrio.Modelo.DAO.ProductoDAO;
-import com.Tienda.Tienda_de_Barrio.modelo.VO.ProductoVO;
+import com.Tienda.Tienda_de_Barrio.Modelo.VO.ProductoVO;
 
 @RestController
 @RequestMapping("/api/productos")

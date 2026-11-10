@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.Tienda.Tienda_de_Barrio.Modelo.DAO.UsuarioDAO;
-import com.Tienda.Tienda_de_Barrio.modelo.VO.UsuarioVO;
+import com.Tienda.Tienda_de_Barrio.Modelo.VO.UsuarioVO;
 
 @Service
 public class TiendaUserDetailsService implements UserDetailsService, UserDetailsPasswordService {

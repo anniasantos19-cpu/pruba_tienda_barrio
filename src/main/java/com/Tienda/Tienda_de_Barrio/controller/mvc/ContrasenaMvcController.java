@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.Tienda.Tienda_de_Barrio.Modelo.DAO.UsuarioDAO;
-import com.Tienda.Tienda_de_Barrio.modelo.VO.UsuarioVO;
+import com.Tienda.Tienda_de_Barrio.Modelo.VO.UsuarioVO;
 
 @Controller
 public class ContrasenaMvcController {

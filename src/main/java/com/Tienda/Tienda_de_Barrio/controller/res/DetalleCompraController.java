@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Tienda.Tienda_de_Barrio.Modelo.DAO.DetalleCompraDAO;
-import com.Tienda.Tienda_de_Barrio.modelo.VO.DetalleCompraVO;
+import com.Tienda.Tienda_de_Barrio.Modelo.VO.DetalleCompraVO;
 
 @RestController
 @RequestMapping("/api/detalles-compras")
